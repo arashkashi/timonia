@@ -1,5 +1,5 @@
 import argparse
-from messages.messages import HelloWorld
+from src.test_package.test_package import HelloWorld
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--inputfile",

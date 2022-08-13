@@ -24,3 +24,8 @@ follow the examples of this folder
 ```sh
 tests/test_example
 ```
+
+### To import Packages
+```python
+from src.test_package.test_package import HelloWorld
+```

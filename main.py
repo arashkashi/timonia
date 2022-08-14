@@ -1,5 +1,7 @@
 import argparse
-from src.test_package.test_package import HelloWorld
+
+from src.sampler.simulation_sampler import SimulationSampler
+from src.processor.simulation_processor import SimulationProcessor
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--inputfile",
@@ -7,10 +9,11 @@ parser.add_argument("--inputfile",
 args = parser.parse_args()
 
 if args.inputfile:
-	print(args.inputfile)
+	sampler = SimulationSampler(args.inputfile)
+	processor = SimulationProcessor()
+	while next_sample := sampler.next_sample():
+		processor.on_next_sample(next_sample)
+
 else:
 	print("Error: please use help option")
 
-hello_world_string = "Hello World"
-hello_world_object = HelloWorld(hello_world_string)
-hello_world_object.hello_world_method()

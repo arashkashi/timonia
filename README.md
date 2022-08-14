@@ -1,4 +1,15 @@
-# How?
+# Run
+### switch to branch
+```sh
+git checkout feature/skeleton
+```
+### Activate envirnmant
+### Command
+```sh
+python main.py --inputfile ./tests/data/hellow_world_test_data.txt
+```
+
+# How do everything?
 ### Activate envirnmant
 ```sh
 source ./bin/activate
@@ -14,9 +25,8 @@ python main.py --help
 ````
 
 ### Run Tests
-Navigate to tests folder and run below:
 ```sh
-python -m unittest discover -v
+python -m unittest discover -v ./tests
 ```
 
 ### Add Test

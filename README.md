@@ -26,7 +26,7 @@ python main.py --help
 
 ### Run Tests
 ```sh
-python -m unittest discover -v ./tests
+python3 -m unittest discover -v ./tests
 ```
 
 ### Add Test

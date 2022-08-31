@@ -4,6 +4,7 @@ class SimulationProcessor:
 		self.last_sample = None
 
 	def on_next_sample(self, next_sample):
+		assert false
 		price = float(next_sample)
 
 		if last_price := self.last_sample:

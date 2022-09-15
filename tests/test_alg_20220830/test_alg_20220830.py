@@ -3,6 +3,7 @@ from src.sampler.csv_sampler import CSVSampler
 from src.processor.simulation_processor_babak import SimulationProcessorBabak
 from src.trader.trader import Trader
 import logging
+import matplotlib.pyplot as plt
 
 class TestCSVSampler(unittest.TestCase):
     def test_csv_sampler(self):
@@ -22,6 +23,18 @@ class TestCSVSampler(unittest.TestCase):
 
         trader.sell("binancecoin", last_price)
         logging.info(f'Concluded alg-20220830 with funds {trader.funds}')
+
+        self.assertEqual(len(processor.buys), len(processor.samples))
+
+        plt.plot(list(map(lambda x: x['prices'], processor.samples)))
+        plt.plot(list(map(lambda x: x[0]['prices'] if x[1] == 1 else 0, zip(processor.samples, processor.buys))), 'r+')
+        plt.plot(list(map(lambda x: x[0]['prices'] if x[1] == 1 else 0, zip(processor.samples, processor.sells))), 'bo')
+        plt.show()
+        plt.plot(list(map(lambda x: x['prices'], processor.samples)))
+        plt.plot(list(map(lambda x: x[0]['prices'] if x[1] == 1 else 0, zip(processor.samples, processor.buys))), 'r+')
+        plt.plot(list(map(lambda x: x[0]['prices'] if x[1] == 1 else 0, zip(processor.samples, processor.sells))), 'bo')
+        plt.show()
+
 
 
 if __name__ == '__main__':

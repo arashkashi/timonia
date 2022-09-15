@@ -13,7 +13,7 @@ class Trader:
 		numbers_can_buy = math.floor(self.funds/price)
 
 		if numbers_can_buy < 1: 
-			return
+			return False
 
 		# Deduct from funds.
 		self.funds = self.funds - numbers_can_buy * price
@@ -22,11 +22,14 @@ class Trader:
 		current_amount = self.assets.get(name_id, 0)
 		self.assets[name_id] = current_amount + numbers_can_buy
 
+		return True
+
 	def sell(self, name_id, price):
 		current_amount = self.assets.get(name_id, 0)
 		if current_amount == 0:
-			return
+			return False
 
 		self.assets[name_id] = 0
 		self.funds = self.funds + price * current_amount
+		return True
 

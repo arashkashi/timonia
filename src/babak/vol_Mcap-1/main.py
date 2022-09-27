@@ -134,19 +134,12 @@ for k in range(len(coins['coin_id'])) : #### len(coins['coin_id'])
     df['Slope']= round((df.Close -df.Close.shift(1))/df.Close.shift(1) *100 , 2)
     df['Pivot'] = ''
 
-    # for i in range( 1 , len(df.Open) - 1 ) :
-    #     if df.Heiken_color[i] != df.Heiken_color[i-1] and df.Heiken_color[i] != df.Heiken_color[i+1]:
-    #         df.at[ i , 'Heiken_color' ] = df.Heiken_color[i-1]
     pivots=Supp_Res( df.High , df.Open , df.Close , df.Low , df.timestamp )
-    # pivots.to_csv(coins['symbol'][k]+'_pivot.csv')
+
     for i in range(len(pivots.indexes)) :
         df.at[ pivots.indexes[i] , 'Pivot'] = pivots.type[i]
 
     df = df.drop(['Heiken_H','Heiken_O','Heiken_C','Heiken_L'], axis = 1)
-
-
-    # print(df['success_short'].value_counts())
-    # print(a)
 
     df.to_csv(coin_id+'_'+PAIR+'.csv')
 

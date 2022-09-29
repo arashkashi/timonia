@@ -21,7 +21,7 @@ def add_pivot_with_heiken(df):
 	else:
 		df.at[ 0 , 'Heiken_color' ] = 'red'
 
-	for i in range( 1 , len(df.Open) ) :
+	for i in range( 1 , len(df.index) ) :
 		df.at[ i , 'Heiken_C'] = 0.25 * (df.Open[i] + df.High[i] + df.Low[i] + df.Close[i])
 		df.at[ i , 'Heiken_O'] = 0.5 * (df.Heiken_C[i-1] + df.Heiken_O[i-1])
 		df.at[ i , 'Heiken_H'] = max(df.Heiken_C[i] , df.Heiken_O[i] , df.High[i])

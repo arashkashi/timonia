@@ -6,6 +6,7 @@ from binance import Client
 from src.utilities.pre_processor import *
 from src.utilities.extension_datetime import *
 from datetime import date, timedelta, datetime
+import numpy as np
 
 # Each sample is in the following format
 # {"prices":[[1663333350686,22.26499972222752]],
@@ -34,35 +35,30 @@ class Sampler20220830(Sampler):
 		df = pd.merge(df, market_Cap , on=['timestamp'])
 
 		df['Vol_Mcap_ratio'] = df.total_volume/df.market_caps
-		df['Date'] = df['timestamp'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime("%m/%d/%Y, %H:%M"))
-		# df['Date'] = pd.to_datetime(df['timestamp'], unit='ms')
-
-	
+		df = df.astype(float)
 
 		client  = Client()
 		yesterday_date_in_string = (date.today()- timedelta(days=1)).strftime("%Y-%m-%d")
 		klines = pd.DataFrame( client.get_historical_klines("BNBBTC", Client.KLINE_INTERVAL_1MINUTE, yesterday_date_in_string ) )
 		klines = klines.iloc[:,:7]
 		klines.columns = ['timestamp' , 'Open' , 'High' , 'Low' , 'Close' , 'Volume' , "Close Time"]
-		add_date_column(klines)
+		klines = klines.astype(float)
+		klines = add_date_column(klines)
 		
-		df = pd.merge(df, klines , on=['Date'])
-		print()
-		print(klines)
-		print(df)
-		
-		# df = df.astype(float)
 		df = add_date_column(df)
+		df = pd.merge(df, klines , on=['Date'])
+
+		
 
 		df['moving_avg_Vol_MCap'] = df['Vol_Mcap_ratio'].rolling(window=sma_window).mean()
 
-		for i in range(25 , len(df.timestamp)):
+		for i in range(25 , len(df.index)):
 			if df.Vol_Mcap_ratio[i] >= np.mean(df.Vol_Mcap_ratio.iloc[:i-1]) + 2*np.std(df.Vol_Mcap_ratio.iloc[:i-1]) :
 				df.at[i, 'Un_Norm_Vol_MCap' ] = True
 			else :
 				df.at[i, 'Un_Norm_Vol_MCap' ] = np.nan
 
-		# df = add_pivot_with_heiken(df)
+		df = add_pivot_with_heiken(df)
 
 		last_element = df.iloc[-1]
 

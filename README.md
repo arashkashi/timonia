@@ -8,7 +8,7 @@ git checkout feature/skeleton
 ```sh
 python main.py --inputfile ./tests/data/hellow_world_test_data.txt
 ```
-
+```
 # How do everything?
 ### Activate envirnmant
 ```sh
@@ -23,6 +23,11 @@ deactivate
 ```sh
 python main.py --help
 ````
+###.Install.Package¬¬
+###.Command¬¬
+```sh¬
+pip.install.binance⋅¬
+```
 
 ### Run Tests
 ```sh

@@ -1,10 +1,11 @@
 import pandas as pd
 import time
+import numpy as np
+from src.utilities import Heiken_pivot
 
 def add_pivot_with_heiken(df):
-	print("8" * 50)
-	print(df)
-	print("8" * 50)
+
+	last_comparison = 1.1
 	df['Heiken_H']=''
 	df['Heiken_L']=''
 	df['Heiken_O']=''
